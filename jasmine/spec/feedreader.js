@@ -56,9 +56,10 @@ $(function () {
         Test suit for the menu
     */
     describe("The menu", function () {
-        var menu = $("body").hasClass("menu-hidden");
+        
 
         it("should be hidden by default", function () {
+            var menu = $("body").hasClass("menu-hidden");
             //when the page is loaded, i is instantiated to zero
             //meaning that it is an iniatial load and the menu must
             //be hidden
@@ -70,12 +71,16 @@ $(function () {
             //when the menu is now being clicked, the var i begins to 
             //increment, odd numbers means the menu is visible while
             //even numbers means the menu is hidden.
-            var menuClick = $(".menu-icon-link");
+            var menu, menuClick = $(".menu-icon-link");
+
             //click first time
-            menuClick.trigger('click');
+            menuClick.click();
+            menu = $("body").hasClass("menu-hidden");
             expect(menu).toBe(false);
+            
             //click second time
-            menuClick.trigger('click');
+            menuClick.click();
+            menu = $("body").hasClass("menu-hidden");
             expect(menu).toBe(true);
            
         });
