@@ -14,7 +14,7 @@ $(function () {
      * feeds definitions, the allFeeds variable in our application.
      */
     describe('RSS Feeds', function () {
-        
+
         /* This is our first test - it tests to make sure that the
          * allFeeds variable has been defined and that it is not
          * empty. Experiment with this before you get started on
@@ -57,13 +57,11 @@ $(function () {
     */
     describe("The menu", function () {
         var menu = $("body").hasClass("menu-hidden");
-        var i = 0;
 
         it("should be hidden by default", function () {
             //when the page is loaded, i is instantiated to zero
             //meaning that it is an iniatial load and the menu must
             //be hidden
-            expect(i).toBe(0);
             expect(menu).toBe(true);
         });
 
@@ -72,15 +70,14 @@ $(function () {
             //when the menu is now being clicked, the var i begins to 
             //increment, odd numbers means the menu is visible while
             //even numbers means the menu is hidden.
-            $(".menu-icon-link").click(function () {
-                i++;
-            });
-
-            if (i % 2 !== 0) {
-                expect(menu).toBe(false);
-            } else {
-                expect(menu).toBe(true);
-            }
+            var menuClick = $(".menu-icon-link");
+            //click first time
+            menuClick.trigger('click');
+            expect(menu).toBe(false);
+            //click second time
+            menuClick.trigger('click');
+            expect(menu).toBe(true);
+           
         });
 
     });
@@ -95,7 +92,7 @@ $(function () {
         });
         it("should have at least one .entry element within the .feed container", function (done) {
             //grab the values after asynchronous load
-            content = $(".entry");
+            content = $(".feed .entry");
             len = content.length;
             expect(len).toBeGreaterThan(0);
             done();
@@ -110,25 +107,19 @@ $(function () {
     */
     describe("New Feed Selection", function () {
 
-        var firstFeedHref, secondFeedHref;
+        var firstFeed, secondFeed;
         beforeEach(function (done) {
             loadFeed(0, function () {
                 //grab the firstFeed a tags 
-                firstFeedHref = $(".feed a");
+                firstFeed = $(".feed").html();
                 loadFeed(1, done);
             });
 
         });
 
-        it("should be able to change content", function (done) {
-            secondFeedHref = $(".feed a");
-
-            for (var i = 0; i < secondFeedHref.length; i++) {
-                for (var j = 0; j < firstFeedHref.length; j++) {
-                    expect(secondFeedHref[i].href).not.toBe(firstFeedHref[j].href);
-                }
-            }
-            done();
+        it("should be able to change content", function () {
+            secondFeed= $(".feed").html();
+              expect(secondFeed).not.toBe(firstFeed);
         });
 
 
